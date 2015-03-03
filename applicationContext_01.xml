@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="helloYou" class="com.atguigu.spring.helloworld.HelloWorld">
+		<property name="name23" value="spring..."></property>
+	</bean>
+	
+	<!--  
+	<bean id="helloYou2" class="com.atguigu.spring.helloworld.HelloWorld">
+		<property name="name23" value="spring..."></property>
+	</bean>
+	-->
+	
+	<!-- 使用构造器注入属性值可以制定参数的位置和参数的类型以区分重载的构造器 -->
+	<bean id="car" class="com.atguigu.spring.helloworld.Car">
+	<constructor-arg value="LandRover" index="0"></constructor-arg>
+	<constructor-arg value="shanghai" index="1"></constructor-arg>
+	<constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<bean id="car2" class="com.atguigu.spring.helloworld.Car">
+		<constructor-arg value="Dazhong" type="java.lang.String"></constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<!-- 特殊字符用<![CDATA[]]>包裹。。 -->
+			<value><![CDATA[<SHANGHAI^>]]></value>
+		</constructor-arg>
+		<constructor-arg type="int">
+			<value>250</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="person" class="com.atguigu.spring.helloworld.Person">
+		<property name="name" value="Tom"></property>
+		<property name="age" value="24"></property>
+		<!-- ref属性建立bean之间的引用关系 -->
+		<!--  
+		<property name="car" ref="car">
+		</property>
+		或者
+		<property name="car" >
+			<ref bean="car"/>
+		</property>
+		-->
+		
+		<!-- 内部bean,不能被外部引用 -->
+		<property name="car">
+			<bean class="com.atguigu.spring.helloworld.Car">
+				<constructor-arg value="Ford"></constructor-arg>
+				<constructor-arg value="changan"></constructor-arg>
+				<constructor-arg value="200000.0" type="double"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="person2" class="com.atguigu.spring.helloworld.Person">
+		<constructor-arg value="Jerry"></constructor-arg>
+		<constructor-arg value="25"></constructor-arg>
+		<constructor-arg ref="car"></constructor-arg>
+	</bean>
+	
+</beans>
