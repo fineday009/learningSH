@@ -13,7 +13,7 @@
 	</bean>
 	-->
 	
-	<!-- 使用构造器注入属性值可以制定参数的位置和参数的类型以区分重载的构造器 -->
+	<!-- 使用构造器注入属性值，可以制定参数的位置和参数的类型以区分重载的构造器 -->
 	<bean id="car" class="com.atguigu.spring.helloworld.Car">
 	<constructor-arg value="LandRover" index="0"></constructor-arg>
 	<constructor-arg value="shanghai" index="1"></constructor-arg>
