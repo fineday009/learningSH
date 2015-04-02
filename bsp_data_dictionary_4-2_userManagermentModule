@@ -1,0 +1,152 @@
+模块：用户管理
+表名：t_company
+描述：存放公司实体及其各种状态
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	公司id	INT(11)	FALSE		主键
+c_company_name	公司实名	VARCHAR(255)	TRUE	NULL	与工商营业执照一致
+c_province	所在省	VARCHAR(32)	TRUE	NULL	
+c_city	所在市	VARCHAR(32)	TRUE	NULL	
+c_district	所在区	VARCHAR(32)	TRUE	NULL	
+c_bussiness_license_pic_path	工商执照图片的存放路径	VARCHAR(32)	TRUE	NULL
+
+
+	不存实体，存放路径，减少冗余数据
+c_bussiness_license_number	营业执照号码	VARCHAR(32)	TRUE	NULL	与工商营业执照一致
+c_contactor	公司联系人姓名	VARCHAR(32)	TRUE	NULL	
+c_landline	座机号	VARCHAR(32)	TRUE	NULL	
+c_mobile	手机号	VARCHAR(32)	TRUE	NULL	
+c_contactor_email	电子邮箱地址	VARCHAR(64)	TRUE	NULL	
+c_company_status	是否付费	INT (11)	TRUE	NULL
+
+
+	
+c_company_type	公司类别	INT(11)	TRUE	NULL	是采购商还是供应商
+c_company_status_comments		VARCHAR(255)	TRUE	NULL	
+c_local_acl		BLOB	TRUE	NULL	
+c_register_capital		INT(11)	TRUE	NULL	
+c_deleted		TINYINT(1)	TRUE	NULL	
+表名：t_user
+描述：平台用户（采购方+供应方）统一的基表
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	唯一id号	INT(11)	FALSE		主键
+c_realname	真实姓名	VARCHAR(255)	TRUE	NULL	
+c_mobile	手机	VARCHAR(32)	TRUE	NULL	
+c_landline	座机	VARCHAR(32)	TRUE	NULL	
+c_password	密码	VARCHAR(255)	TRUE	NULL	
+c_role	角色类型	INT(11)	TRUE	NULL	外键，引用t_role的c_id
+c_manager	经理标识	INT(11)	TRUE	NULL	各个角色用int型，方便权限控制
+c_director	决策人标识	INT(11)	TRUE	NULL	
+c_auditor	审计员标识	INT(11)	TRUE	NULL	
+c_company_id	所属公司	INT(11)	TRUE	NULL	
+c_deleted	是否被删除	TINYINT(1)	TRUE	NULL	用1位整数存储
+
+表名：t_role
+描述：确定具体角色表
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	角色号	INT(11)			主键
+c_value	？	VARCHAR(255)	TRUE	NULL	
+c_desc	角色描述	VARCHAR(255)	TRUE	NULL	
+
+表名：t_customer_list
+描述：销售员存的采购商客户列表
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	客户编号	INT(11)	FALSE		主键
+c_userid	用户id	INT(11)	TRUE		外键，引用t_user的c_id
+
+表名：t_email_list
+描述：销售员维护的联系人列表
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	客户编号	INT(11)	FALSE		主键
+c_name	供应商姓名	INT(11)	TRUE	NULL	外键，引用t_user的c_id
+c_email	供应商联系邮箱	VARCHAR(45)	TRUE	NULL	
+
+
+表名：t_sysconfig
+描述：不懂。。
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	公司id	INT(11)	FALSE		外键，引用t_company的c_id
+c_sysconfig	?	BLOB	TRUE	NULL	
+
+
+表名：t_company_status
+描述：不懂。。。。里面没数据
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+					
+
+表名：t_company_location
+描述：公司所在地
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_province	所在省	VARCHAR(255)	TRUE	NULL	
+c_city	所在市	VARCHAR(255)	TRUE	NULL	
+c_district	所在区	VARCHAR(255)	TRUE	NULL	
+
+
+
+表名：t_company_log
+描述：公司日志
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+t_company_c_id	公司id	INT(11)	FALSE		外键，引用t_company的c_id
+c_create_time	日志创建时间	VARCHAR(45)	TRUE	NULL	
+c_payment_time		VARCHAR(45)	TRUE	NULL	
+c_overdue_time		VARCHAR(45)	TRUE	NULL	
+
+表名：t_task_list
+描述：？
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	主键	INT(11)	FALSE		
+c_company_id	公司id	INT(11)		NULL	外键，引用t_company的c_id
+c_createtime	创建时间	DATETIME		NULL	
+c_endtime	截止时间	DATETIME		NULL	
+c_task_type		VARCHAR(45)		NULL	
+
+
+表名：t_purchase_category
+描述：销售员的采购品种
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	采购号品种号	INT(11)	FALSE		
+c_tree	采购品种树	VARCHAR(45)	TRUE		
+c_user_id		INT(11)	TRUE	NULL	外键，引用t_user的c_id
+c_company_id		INT(11)	TRUE	NULL	外键，引用t_company的c_id
+
+
+
+
+
+表名：t_sales_range
+描述：销售员的负责区域表
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	销售区域号	INT(11)	FALSE		
+c_tree	销售区域的树	BLOB	TRUE		
+c_user_id		INT(11)	TRUE	NULL	外键，引用t_user的c_id
+c_company_id		INT(11)	TRUE	NULL	外键，引用t_company的c_id
+
+
+
+表名：t_payment_type
+描述：支付类型，无外键
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	支付id	INT(11)	FALSE		
+c_type	支付类型	VARCHAR(45)	TRUE	NULL	
+c_desc	描述文本	BLOB	TRUE	NULL	
+
+
+
+
+
+
+
+
+表名：t_bid_partner
+描述：？？ ，含有一个外键
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	伙伴id	INT(11)			
+c_user_id		INT(11)			外键，引用t_user的c_id
+c_partner_name	姓名名	VARCHAR(45)	TRUE	NULL	
+c_partner_email	电子邮箱	VARCHAR(45)	TRUE	NULL	
+
+ 
+表名：t_global_acl
+描述：全局权限控制，咋只有一个字段？
+字段	意义	类型(长度)	是否允许为空	默认值	备注
+c_id	主键	INT(11)	FALSE		
+
